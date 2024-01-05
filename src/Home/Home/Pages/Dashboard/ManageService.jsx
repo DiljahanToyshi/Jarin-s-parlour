@@ -23,9 +23,7 @@ const ManageService = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-         console.log(result);
         axiosSecure.delete(`/services/${item._id}`).then((res) => {
-          console.log("deleted res", res.data);
           if (res.data.deletedCount > 0) {
             refetch();
             Swal.fire("Deleted!",  `${item.title} Service has been deleted.`, "success");

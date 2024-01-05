@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../Components/hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+import { AuthContext } from "../../Components/Providers/AuthProvider";
 
 const Review = () => {
   const img_hosting_token = import.meta.env.VITE_IMGBB_KEY;
@@ -11,11 +12,10 @@ const Review = () => {
   const { register, handleSubmit, reset } = useForm();
   const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
   const navigate = useNavigate();
-
+const {user} = useContext(AuthContext);
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("image", data.image[0]);
-    console.log(formData);
 
     fetch(img_hosting_url, {
       method: "POST",
@@ -25,11 +25,9 @@ const Review = () => {
       .then((imgResponse) => {
         if (imgResponse.success) {
           const imgURL = imgResponse.data.display_url;
-          const { review, name, designation } = data;
-          const newItem = { review, name, designation, image: imgURL };
-          console.log(newItem);
+          const { review, name, designation,rating } = data;
+          const newItem = { review, name, designation, image: imgURL,rating };
           axiosSecure.post("/reviews", newItem).then((data) => {
-            console.log("after posting new menu item", data.data);
             if (data.data.insertedId) {
               reset();
               Swal.fire({
@@ -63,7 +61,7 @@ const Review = () => {
                     <div className="pt-1 text-gray-400">Upload Image</div>
                   </div>
                   <input
-                    type="file"
+                    type="file" 
                     {...register("image", { required: true })}
                     className="  text-sm cursor-pointer w-36  rounded-md hidden "
                   />
@@ -71,13 +69,14 @@ const Review = () => {
               </div>
               <div className="form-control md:w-full pt-8 ">
                 <input
-                  type="text"
+                  type="text" defaultValue={user?.displayName} readOnly
                   {...register("name", { required: true })}
                   placeholder="Enter your name"
                   className="input input-bordered w-full md:px-3 md:py-2 border rounded-md border-rose-300 focus:outline-rose-400 bg-gray-100 text-gray-900 "
                 />
               </div>
             </div>
+            <div className="md:flex gap-4  items-center">
             <div className="form-control md:w-full ">
               <input
                 type="text"
@@ -85,6 +84,15 @@ const Review = () => {
                 placeholder="Company’s name, Designation"
                 className="my-3 md:my-6 input input-bordered w-full md:px-3 md:py-2 border rounded-md border-rose-300 focus:outline-rose-400 bg-gray-100 text-gray-900 "
               />
+            </div>
+            <div className="form-control md:w-full ">
+              <input
+                type="number"
+                {...register("rating", { required: true })}
+                placeholder="Rating"
+                className="my-3 md:my-6 input input-bordered w-full md:px-3 md:py-2 border rounded-md border-rose-300 focus:outline-rose-400 bg-gray-100 text-gray-900 "
+              />
+            </div>
             </div>
 
             <div className="form-control md:w-full ">

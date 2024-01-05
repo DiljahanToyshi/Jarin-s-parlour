@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
@@ -13,11 +13,23 @@ const ServiceCard = ({ service }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    // Check localStorage if the button has already been clicked
+    const userEmail = user?.email || 'guest';
+ const isClicked = localStorage.getItem(`buttonClicked_${_id}_${userEmail}`);
+    if (isClicked) {
+      setIsButtonClicked(true);
+    }
+  }, [_id, user?.email]);
+  
+
   // for booking
   const handleBooking = (service) => {
-    if (user && user.email) {
 
-      const bookingItem = {
+    if (!isButtonClicked && user && user.email) {
+      const userEmail = user.email;
+      const bookingKey = `buttonClicked_${_id}_${userEmail}`;
+            const bookingItem = {
         bookingId: _id,description,
         userID:user?.uid,
         title,
@@ -38,7 +50,9 @@ const ServiceCard = ({ service }) => {
         .then((res) => res.json())
         .then((data) => {
           if (data.insertedId) {
-            refetch();
+            setIsButtonClicked(true);
+        localStorage.setItem(bookingKey, "true");
+        refetch();
             const Toast = Swal.mixin({
               toast: true,
               position: "top-end",
@@ -106,6 +120,7 @@ const ServiceCard = ({ service }) => {
         <div>
           <button
             onClick={() => handleBooking(service)}
+            disabled={isButtonClicked}
             className={`bg-rose-500 w-full rounded-md p-3 text-white ${
               isButtonClicked && "pointer-events-none opacity-50"
             }`}

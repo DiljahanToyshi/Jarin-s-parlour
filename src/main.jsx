@@ -22,6 +22,7 @@ import PrivateRoute from './Home/Home/Components/Route/PrivateRoute';
 import AdminRoute from "./Home/Home/Components/Route/AdminRoute.jsx";
 import Review from "./Home/Home/Pages/Dashboard/Review.jsx";
 import UpdateCard from "./Home/Home/Components/Card/UpdateCard.jsx";
+import Welcome from "./Home/Home/Pages/Dashboard/Welcome.jsx";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "book",
         element: <Book></Book>,
+      },
+      {
+        path: "home",
+        element:<Welcome/>
       },
       {
         path: "orderList",

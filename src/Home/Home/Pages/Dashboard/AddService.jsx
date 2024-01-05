@@ -14,7 +14,6 @@ const AddService = () => {
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("image", data.image[0]);
-    console.log(formData);
 
     fetch(img_hosting_url, {
       method: "POST",
@@ -22,7 +21,6 @@ const AddService = () => {
     })
       .then((res) => res.json())
       .then((imgResponse) => {
-        console.log(imgResponse);
         if (imgResponse.success) {
           const imgURL = imgResponse.data.display_url;
           const { title, description, price } = data;
@@ -32,9 +30,7 @@ const AddService = () => {
             title,
             image: imgURL,
           };
-          console.log(newService);
           axiosSecure.post("/services", newService).then((data) => {
-            console.log("after posting new menu item", data.data);
             if (data.data.insertedId) {
               reset();
               Swal.fire({

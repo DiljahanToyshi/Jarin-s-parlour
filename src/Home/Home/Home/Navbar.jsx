@@ -12,7 +12,7 @@ const Navbar = () => {
     <div className="bg-red-50 p-3 px-6 py-5 mx-auto lg:px-12">
       <div className="relative  flex items-center justify-between">
         <Link to="/" className="inline-flex ">
-          <img src={logo} className="h-12" alt="logo" />
+          <img  src={logo} className="h-12" alt="logo" />
         </Link>
         {/* nav item */}
         <ul className="items-center hidden space-x-8 lg:flex md:m-4 px-8">
@@ -47,11 +47,11 @@ const Navbar = () => {
             </NavLink>
           </li>
      <li>  
-       <Link to='/dashboard/book'>  <img
-      className='rounded-full'
+       <Link to='/dashboard/home'>  <img
+      className='rounded-full' referrerPolicy="no-referrer"
       src={user && user.photoURL ? user.photoURL : avatarImg}
       alt='profile'
-      title={user && user.displayName ? user.displayName : " "}
+      title={"Dashboard"}
       height='36'
       width='36'
     /></Link>
@@ -68,16 +68,8 @@ const Navbar = () => {
           <NavLink to="/login"
 > <button className="btn px-6 text-white bg-[#F63E7B] font-semibold hover:bg-rose-100 hover:text-[#F63E7B]">Login</button></NavLink> {" "}
           </li>
-          <li>
-            <NavLink
-              to="/signup"
-              className={({ isActive }) =>
-                isActive ? "text-rose-600 font-semibold" : "default font-medium"
-              }
-            >
-              Sign Up
-            </NavLink>
-          </li>
+              
+          
               </>
             )}
        
@@ -142,7 +134,7 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>  
-       <Link to='/dashboard/book'>  <img
+       <Link to='/dashboard/home'>  <img
       className='rounded-full m-auto'
       src={user && user.photoURL ? user.photoURL : avatarImg}
       alt='profile'

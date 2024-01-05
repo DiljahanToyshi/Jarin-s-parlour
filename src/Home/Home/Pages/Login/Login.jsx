@@ -63,7 +63,6 @@ const Login = () => {
     const password = event.target.password.value;
     signIn(email, password)
       .then((result) => {
-        console.log(result.user);
 
         Swal.fire({
           position: "top-center",
@@ -106,7 +105,6 @@ const Login = () => {
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err.message);
         const Toast = Swal.mixin({
           toast: true,
           position: "top",

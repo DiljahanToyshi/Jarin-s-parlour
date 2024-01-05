@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.title-text{
+    @apply sm:my-5 my-7 md:py-7 text-5xl mx-auto font-semibold md:text-center
+
+}

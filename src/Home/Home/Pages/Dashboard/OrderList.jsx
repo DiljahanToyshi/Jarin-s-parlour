@@ -1,19 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
 import { BsChevronDown } from "react-icons/bs";
 import { useNavigation } from "react-router-dom";
 import Loader from "../../Components/Loader/Loader";
-import useCart from "../../Components/hooks/useCart";
+import { useEffect, useState } from "react";
+import { getAllBookings } from "../../Components/hooks/auth";
 
 const OrderList = () => {
+  const [users, setUsers] = useState([])
+
   const navigation = useNavigation();
   if (navigation.state === "loading") {
     return <Loader />;
   }
+  useEffect(() => {
+    getAllBookings()
+      .then(data => {
+          setUsers(data);
+        console.log(data);
 
-  
-  const [cart] = useCart();
-  console.log(cart);
-  return (
+      })
+  }, [])
+    return (
     <div className="w-full ">
       <div className=" text-3xl font-normal md:text-center py-3 px-5 md:pt-0">
         Customer List
@@ -35,7 +41,7 @@ const OrderList = () => {
                 </tr>
               </thead>
               <tbody className="font-semibold">
-                {cart.map((user, index) => (
+                {users.map((user, index) => (
                   <tr key={user?.bookingId}>
                     <th>{index + 1}</th>
                     <td>{user?.name}</td>

@@ -8,10 +8,14 @@ import logo from "../../../../assets/logo.png";
 
 import { FiShoppingCart } from "react-icons/fi";
 import useAdmin from "../../Components/hooks/useAdmin";
+import Loader from "../../Components/Loader/Loader";
 
 const Dashboard = () => {
   // TODO: load data from the server to have dynamic isAdmin based on Data
-  const [isAdmin] = useAdmin();
+  const [isAdmin,isAdminLoading] = useAdmin();
+  if(isAdminLoading){
+    return <Loader/>;
+  }
   return (
     <div className="drawer lg:drawer-open ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -27,10 +31,11 @@ const Dashboard = () => {
       <div className="drawer-side ">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 h-full text-base-content bg-rose-50">
+    
         <li><Link to="/" className="inline-flex ">
           <img src={logo} className="h-12" alt="logo" />
         </Link></li>
-          {isAdmin ? (
+          {isAdmin && !isAdminLoading ? (
             <>
               <li>
                 <NavLink

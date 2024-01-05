@@ -5,13 +5,11 @@ import Swal from "sweetalert2";
 
 const UpdateCard = () => {
   const updateData = useLoaderData();
-  console.log(updateData);
   const { register, handleSubmit } = useForm();
 const navigate = useNavigate();
 
   // handleUpdateData
   const onSubmit = (data) => {
-    console.log(data);
     fetch(`http://localhost:5000/services/${updateData._id}`,{
       method: "PUT",
       headers: {
@@ -21,7 +19,6 @@ const navigate = useNavigate();
     })
     .then(res => res.json())
     .then(data =>{
-      // console.log(data);
       if(data.modifiedCount>0){
         Swal.fire({
             position: 'top-end',

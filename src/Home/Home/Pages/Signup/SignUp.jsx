@@ -23,7 +23,6 @@ const SignUp = () => {
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {
-        console.log(result.user);
         Swal.fire({
             position: "top-center",
             icon: "success",
@@ -77,7 +76,6 @@ const SignUp = () => {
         const imageUrl =imageData.data.display_url;
         createUser( email, password)
          .then((result) => {
-           console.log(result.user) ;
            updateUserProfile(name,imageUrl)
            .then(() => {
             Swal.fire({
